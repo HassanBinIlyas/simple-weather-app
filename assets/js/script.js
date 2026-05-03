@@ -9,7 +9,7 @@ const wind = document.querySelector('#wind');
 
 async function checkWeather(cityName) {
     const apiKey = "c54b2b9608454ccfd483a626cd868bbc";
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`
     try {
         const wData = await fetch(`${url}`)
             .then(res => res.json());
@@ -17,11 +17,15 @@ async function checkWeather(cityName) {
                 error.innerHTML = "City not found!";
                 return
             }
-        temp.innerHTML = `${Math.round(wData.main.temp - 273.15)}°C`;
+        temp.innerHTML = `${Math.round(wData.main.temp)}°C`;
         desc.innerHTML = `${wData.weather[0].description}`;
+        if (wData.sys.country === 'IL'){
+            wData.sys.country = '(Occupied) PS';
+        }
         city.innerHTML = `${wData.name}, ${wData.sys.country}`;
         humidity.innerHTML = `${wData.main.humidity}%`;
-        wind.innerHTML = `${wData.wind.speed} km/h`;
+        wind.innerHTML = `${(wData.wind.speed * 3.6).toFixed(2)} km/h`;
+        error.innerHTML = "";
     }
     catch (err) {
         error.innerHTML = "Something went wrong..."

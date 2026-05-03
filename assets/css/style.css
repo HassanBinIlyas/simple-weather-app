@@ -56,6 +56,10 @@ a {
 
 .search-box button img {
     height: 20px;
+    transition: 0.25s;
+}
+.search-box button img:hover {
+    transform: scale(1.15) rotate(-30deg);
 }
 
 .error {
