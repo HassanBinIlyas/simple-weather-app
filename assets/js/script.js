@@ -36,3 +36,7 @@ async function checkWeather(cityName) {
 search.addEventListener('click', () => {
     checkWeather(inpt.value);
 });
+
+inpt.addEventListener('keydown', () => {
+    checkWeather(inpt.value);
+});
