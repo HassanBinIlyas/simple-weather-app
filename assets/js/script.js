@@ -11,12 +11,12 @@ async function checkWeather(cityName) {
     const apiKey = "c54b2b9608454ccfd483a626cd868bbc";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`
     try {
-        const wData = await fetch(`${url}`)
-            .then(res => res.json());
-            if (wData.cod === "404"){
-                error.innerHTML = "City not found!";
-                return
-            }
+        const res = await fetch(url);
+        const wData = await res.json();
+        if (wData.cod === 404){
+            error.innerHTML = "City not found!";
+            return
+        }
         temp.innerHTML = `${Math.round(wData.main.temp)}°C`;
         desc.innerHTML = `${wData.weather[0].description}`;
         if (wData.sys.country === 'IL'){
